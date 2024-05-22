@@ -1,0 +1,19 @@
+.ResultContainer {
+  position: relative;
+}
+.CopyButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  font-size: 25px;
+  line-height: 25px;
+}
+
+.ResultLabel {
+ width: 100%;
+}
+.ResultTextarea {
+width: 100%;
+}
