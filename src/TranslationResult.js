@@ -3,26 +3,37 @@ import "./TranslationResult.css";
 
 import SelectLanguage from "./SelectLanguage";
 
-const deeplKey = "b43153e4-b724-4181-b7d1-3bd902a1dd64:fx";
 const translator = require("deepl");
 
-async function translate(sourcetext, options) {
+async function translate(sourcetext, options, api_settings) {
   const translationResult = await translator({
+    ...api_settings,
     ...options,
-    free_api: true,
     text: sourcetext,
-    auth_key: deeplKey,
-    // All optional parameters available in the official documentation can be defined here as well.
+  }).catch((err) => {
+    return "";
   });
+
   return translationResult.data.translations[0].text;
 }
 
-export default function TranslationResult({ sourceText, label, options }) {
-  const [translatedText, setTranslatedText] = useState();
+export default function TranslationResult({
+  sourceText,
+  label,
+  options,
+  api_settings,
+}) {
+  const [translatedText, setTranslatedText] = useState("");
+  const [existingSourceText, setExistingSourceText] = useState("");
 
-  translate(sourceText, options ? options : {}).then((result) => {
-    setTranslatedText(result);
-  });
+  if (sourceText && existingSourceText !== sourceText) {
+    setExistingSourceText(sourceText);
+    translate(sourceText, options ? options : {}, api_settings).then(
+      (result) => {
+        setTranslatedText(result);
+      }
+    );
+  }
 
   return (
     <div className="ResultContainer">

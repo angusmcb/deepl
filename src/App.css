@@ -33,3 +33,9 @@
 .InputTextarea {
   max-width: 100%;
 }
+
+.openSettingsButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
